@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="theme-color" content="#ffffff">
+    <title>Redding -- a reddit reader</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Reddin is an ajax reddit reader!">
+    <link rel="icon" href="./prereq/d20.svg">
+    <link rel="stylesheet" type="text/css" href="./prereq/fonts.css">
+    <link rel="stylesheet" type="text/css" href="./prereq/main.css">
+</head>
+
+<body>
+<div id="ajaxable">
+    <h1>Huh, it's like reading <i>reddit</i>, but simpler!</h1>
+    <a class="ajax" href="https://www.reddit.com/r/HFY/comments/iocd67/wizard_tournament_chapter_13">https://www.reddit.com/r/HFY/comments/iocd67/wizard_tournament_chapter_13/</a>
+    <h2 id="WTD">What to do:</h2>
+    <ol>
+        <li>Paste the link to the box</li>
+        <li>Press the button</li>
+
+        <li>Enjoy the <span class="rbw">magic</span>.</li>
+    </ol>
+</div>
+    <script>
+        var scriptSrc = [
+            "./prereq/main_script.js",
+            "./prereq/ajax_links.js"
+        ];
+        for (let script of scriptSrc) {
+            var scriptObj = document.body.appendChild(document.createElement('script'));
+            scriptObj.async = false;
+            scriptObj.src = script;
+        }
+    </script>
+</body>
+
+</html>
