@@ -5,22 +5,26 @@ const request = new XMLHttpRequest();
 
 request.addEventListener("readystatechange", () => {
     if (request.readyState === 4 && request.status === 200) {
-        history.replaceState(null, "", request.responseURL);                                                                                //заменяем главу в истории браузера
-        document.getElementsByTagName("title")[0].outerHTML = request.responseText.match(/\<title\>[\s\S]+\<\/title\>/)[0];                 //заменяем заголовок страницы,
-        document.getElementsByTagName("meta")[3].outerHTML = request.responseText.match(/\<meta name="description" content=".+?"\>/)[0];    //её краткое описание
-        document.querySelector('div.expando div.usertext-body').innerHTML;
-        let tempBody = document.createElement('body');
-        tempBody.outerHTML = request.responseText;
-        document.getElementById("ajaxable").innerHTML = tempBody.querySelector('div.expando div.usertext-body').innerHTML;             //и весь материал
+        let responseObj = JSON.parse(request.response);
+        let postObj = responseObj[0].data.children[0].data;
+        console.log(postObj);
+        document.getElementsByTagName("title")[0].innerHTML = postObj.title;
+        document.getElementsByTagName("meta")[3].innerHTML = postObj.url;
+        let tempHtml = postObj.selftext_html;
+        tempHtml = tempHtml.replace(/&lt;/g, "<");
+        tempHtml = tempHtml.replace(/&gt;/g, ">");
+        tempHtml = tempHtml.replace(/&amp;nbsp;/g, " ");
+        tempHtml = tempHtml.replace(/<a href=/g, "<a class =\"ajax\" href=");
+        document.getElementById("ajaxable").innerHTML = tempHtml;
     }
 });
 
 function initiateShift (e) {
     if (e.target.className === "ajax") {
         e.preventDefault();
-        let url = e.target.href;
+        let url = document.getElementById('whereTo').value + "/.json";//e.target.href + "/.json"; // Somewhy getting JSON is not forbidden by CORS?
         request.open('GET', url);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-url');
+        //request.setRequestHeader('Content-Type', 'application/x-www-form-url');
         request.send(); //Не сработает на локальном файле, ибо CORS policy …
         return false;
     }
