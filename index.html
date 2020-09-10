@@ -13,18 +13,20 @@
 </head>
 
 <body>
-<div id="ajaxable">
-    <h1>Huh, it's like reading <i>reddit</i>, but simpler!</h1>
-    <input id="whereTo" style="width:100%" value="https://www.reddit.com/r/HFY/comments/i7qje7/wizard_tournament_humans_need_not_apply/">
-    <a class="ajax" href="">RUN</a>
-    <h2 id="WTD">What to do:</h2>
-    <ol>
-        <li>Paste the link to the box</li>
-        <li>Press the button</li>
+    <div id="navigation">
+        <h1 id="header">Huh, it's like reading <i>reddit</i>, but simpler!</h1>
+        <input id="whereTo" value="https://www.reddit.com/r/HFY/comments/i7qje7/wizard_tournament_humans_need_not_apply/">
+        <button class="ajax">→</button>
+    </div>
+    <div id="ajaxable">
+        <h2 id="WTD">What to do:</h2>
+        <ol>
+            <li>Paste the link to the box</li>
+            <li>Press the button</li>
 
-        <li>Enjoy the <span class="rbw">magic</span>.</li>
-    </ol>
-</div>
+            <li>Enjoy the <span class="rbw">magic</span>.</li>
+        </ol>
+    </div>
     <script>
         var scriptSrc = [
             "./prereq/main_script.js",
@@ -35,6 +37,7 @@
             scriptObj.async = false;
             scriptObj.src = script;
         }
+        document.getElementById("whereTo").focus();
     </script>
 </body>
 
