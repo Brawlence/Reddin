@@ -19,7 +19,7 @@ html.serif body {
 }
 
 input#whereTo {
-    width:calc(100% - 4em);
+    width:calc(100% - 6em);
 }
 
 div#navigation{
@@ -235,7 +235,8 @@ blockquote author:before {
 
 @media screen and (max-width:500px) {
     body {
-        text-align: left
+        text-align: left;
+        padding: 16px
     }
     div.fancyPositioning div.picture-left,
     div.fancyPositioning div.tleft {

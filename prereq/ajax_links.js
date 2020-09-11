@@ -5,11 +5,11 @@ const request = new XMLHttpRequest();
 
 function parseToHTML(selftext_html) {
     let parsed = selftext_html;
-    parsed = parsed.replace(/&lt;/g, "<");
-    parsed = parsed.replace(/&gt;/g, ">");
-    parsed = parsed.replace(/&#39;/g, "'");
-    parsed = parsed.replace(/&quot;/g, "\"");
-    parsed = parsed.replace(/&amp;nbsp;/g, " ");
+    parsed = parsed.replace(/(&amp;|&)lt;/g, "<");
+    parsed = parsed.replace(/(&amp;|&)gt;/g, ">");
+    parsed = parsed.replace(/(&amp;|&)#39;/g, "'");
+    parsed = parsed.replace(/(&amp;|&)quot;/g, "\"");
+    parsed = parsed.replace(/(&amp;|&)nbsp;/g, " ");
     
     parsed = parsed.replace(/<([/]?)script.*?>/g, "&lt;$1SCRIPT&gt;"); // basic script sanitizing
     parsed = parsed.replace(/<a href=([\S]+)reddit/g, "<a class =\"ajax\" href=$1reddit"); // replacing local reddit links to ajax reader
