@@ -3,6 +3,20 @@ const request = new XMLHttpRequest();
 // var clickEvent = "ontouchstart" in window ? "touchend" : "click";
 // у этого способа есть недостаток — при жесте маштабирование\прокрутки, если touchend приходится на ссылку, событие срабатывает
 
+function parseToHTML(selftext_html) {
+    let parsed = selftext_html;
+    parsed = parsed.replace(/&lt;/g, "<");
+    parsed = parsed.replace(/&gt;/g, ">");
+    parsed = parsed.replace(/&#39;/g, "'");
+    parsed = parsed.replace(/&quot;/g, "\"");
+    parsed = parsed.replace(/&amp;nbsp;/g, " ");
+    
+    parsed = parsed.replace(/<([/]?)script.*?>/g, "&lt;$1SCRIPT&gt;"); // basic script sanitizing
+    parsed = parsed.replace(/<a href=([\S]+)reddit/g, "<a class =\"ajax\" href=$1reddit"); // replacing local reddit links to ajax reader
+
+    return parsed;
+}
+
 request.addEventListener("readystatechange", () => {
     if (request.readyState === 4 && request.status === 200) {
         let responseObj = JSON.parse(request.response);
@@ -10,14 +24,11 @@ request.addEventListener("readystatechange", () => {
         //console.log(postObj);
         document.getElementsByTagName("title")[0].innerHTML = postObj.title;
         document.getElementsByTagName("meta")[3].innerHTML = postObj.url;
-        let tempHtml = postObj.selftext_html;
-        tempHtml = tempHtml.replace(/&lt;/g, "<");
-        tempHtml = tempHtml.replace(/&gt;/g, ">");
-        tempHtml = tempHtml.replace(/&amp;nbsp;/g, " ");
-        tempHtml = tempHtml.replace(/<a href=([\S]+)reddit/g, "<a class =\"ajax\" href=$1reddit");
+
         document.getElementById("header").innerHTML = postObj.title;
         document.getElementById("whereTo").value = postObj.url;
-        document.getElementById("ajaxable").innerHTML = tempHtml;
+        document.getElementById("ajaxable").innerHTML = parseToHTML(postObj.selftext_html);
+
         document.getElementById("whereTo").focus();
     }
 });
