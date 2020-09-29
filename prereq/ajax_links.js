@@ -12,7 +12,9 @@ function parseToHTML(selftext_html) {
     parsed = parsed.replace(/(&amp;|&)nbsp;/g, " ");
     
     parsed = parsed.replace(/<([/]?)script.*?>/g, "&lt;$1SCRIPT&gt;"); // basic script sanitizing
+
     parsed = parsed.replace(/<a href=([\S]+)reddit/g, "<a class =\"ajax\" href=$1reddit"); // replacing local reddit links to ajax reader
+    parsed = parsed.replace(/<a href=([\S]+?)(?!reddit.com)>/g, "<a target =\"_blank\" href=$1>"); // forcing non-reddit links to open in a new window
 
     return parsed;
 }
@@ -28,8 +30,8 @@ request.addEventListener("readystatechange", () => {
         document.getElementById("header").innerHTML = postObj.title;
         document.getElementById("whereTo").value = postObj.url;
         document.getElementById("ajaxable").innerHTML = parseToHTML(postObj.selftext_html);
-
-        document.getElementById("whereTo").focus();
+        document.getElementById("ajaxable").classList.remove("loading");
+        document.getElementById("totop").click();
     }
 });
 
@@ -39,6 +41,7 @@ function initiateShift (e) {
         let url = e.target.href || document.getElementById('whereTo').value; // Somewhy getting JSON is not forbidden by CORS?
         request.open('GET', url + "/.json");
         //request.setRequestHeader('Content-Type', 'application/x-www-form-url');
+        document.getElementById("ajaxable").classList.add("loading");
         request.send();
         return false;
     }
