@@ -1,3 +1,5 @@
+"use strict";
+
 const request = new XMLHttpRequest();
 // для универсальной обработки событий, включая тач: 
 // var clickEvent = "ontouchstart" in window ? "touchend" : "click";
@@ -10,7 +12,11 @@ function parseToHTML(selftext_html) {
     parsed = parsed.replace(/(&amp;|&)#39;/g, "'");
     parsed = parsed.replace(/(&amp;|&)quot;/g, "\"");
     parsed = parsed.replace(/(&amp;|&)nbsp;/g, " ");
+    parsed = parsed.replace(/(&amp;|&)(#8203|ZeroWidthSpace);/g, " ");
     
+    parsed = parsed.replace(/(&amp;)/g, "&");
+
+
     parsed = parsed.replace(/<([/]?)script.*?>/g, "&lt;$1SCRIPT&gt;"); // basic script sanitizing
 
     parsed = parsed.replace(/<a href=([\S]+)reddit/g, "<a class =\"ajax\" href=$1reddit"); // replacing local reddit links to ajax reader
@@ -27,7 +33,8 @@ request.addEventListener("readystatechange", () => {
         document.getElementsByTagName("title")[0].innerHTML = postObj.title;
         document.getElementsByTagName("meta")[3].innerHTML = postObj.url;
 
-        document.getElementById("header").innerHTML = postObj.title;
+        document.getElementById("header").innerText = postObj.title;
+        document.getElementById("header").href = postObj.url;
         document.getElementById("whereTo").value = postObj.url;
         document.getElementById("ajaxable").innerHTML = parseToHTML(postObj.selftext_html);
         document.getElementById("ajaxable").classList.remove("loading");
