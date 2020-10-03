@@ -29,16 +29,20 @@ request.addEventListener("readystatechange", () => {
     if (request.readyState === 4 && request.status === 200) {
         let responseObj = JSON.parse(request.response);
         let postObj = responseObj[0].data.children[0].data;
-        //console.log(postObj);
+
         document.getElementsByTagName("title")[0].innerHTML = postObj.title;
         document.getElementsByTagName("meta")[3].innerHTML = postObj.url;
 
-        document.getElementById("header").innerText = postObj.title;
-        document.getElementById("header").href = postObj.url;
         document.getElementById("whereTo").value = postObj.url;
-        document.getElementById("ajaxable").innerHTML = parseToHTML(postObj.selftext_html);
-        document.getElementById("ajaxable").classList.remove("loading");
-        document.getElementById("totop").click();
+
+        let header = document.getElementById("header");
+        header.innerText = postObj.title;
+        header.href = postObj.url;
+        document.body.scrollIntoView(header);
+
+        let content = document.getElementById("ajaxable");
+        content.innerHTML = parseToHTML(postObj.selftext_html);
+        content.classList.remove("loading");
     }
 });
 
