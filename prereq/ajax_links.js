@@ -12,6 +12,7 @@ function parseToHTML(selftext_html) {
     parsed = parsed.replace(/(&amp;|&)#39;/g, "'");
     parsed = parsed.replace(/(&amp;|&)quot;/g, "\"");
     parsed = parsed.replace(/(&amp;|&)nbsp;/g, " ");
+    parsed = parsed.replace(/&amp;/g, "&");
     parsed = parsed.replace(/(&amp;|&)(#8203|ZeroWidthSpace);/g, " ");
     
     parsed = parsed.replace(/(&amp;)/g, "&");
@@ -19,6 +20,7 @@ function parseToHTML(selftext_html) {
 
     parsed = parsed.replace(/<([/]?)script.*?>/g, "&lt;$1SCRIPT&gt;"); // basic script sanitizing
 
+    parsed = parsed.replace(/<p>.?<a href=([\S]+?preview\.redd\.it.+?").+?<\/a>.?<\/p>/g, "<img src=$1>"); // replacing new-style reddit image embeddings to regular IMGs
     parsed = parsed.replace(/<a href=([\S]+)reddit/g, "<a class =\"ajax\" href=$1reddit"); // replacing local reddit links to ajax reader
     parsed = parsed.replace(/<a href=([\S]+?)(?!reddit.com)>/g, "<a target =\"_blank\" href=$1>"); // forcing non-reddit links to open in a new window
 
