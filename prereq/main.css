@@ -64,6 +64,16 @@ p {
     text-indent: 5ch;
 }
 
+table {
+    border: solid 1px lightgrey;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+td {
+  border: solid 1px lightgrey;
+}
+
 html.serif body {
     font-family: 'Cormorant Garamond', serif;
     font-size: 19.1px;
