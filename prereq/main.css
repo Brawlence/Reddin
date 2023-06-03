@@ -71,7 +71,7 @@ table {
 }
 
 td {
-  border: solid 1px lightgrey;
+    border: solid 1px lightgrey;
 }
 
 html.serif body {
@@ -284,5 +284,16 @@ div#arrow:hover span:nth-child(3){
     }
     div#arrow span:nth-child(1){
         margin-top: 30px;
+    }
+}
+
+@media print {
+    div#navigation,
+    div#arrow,
+    div#contrast,
+    div#invmode,
+    div#serif,
+    div#version {
+        display: none;
     }
 }
