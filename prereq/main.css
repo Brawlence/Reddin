@@ -65,6 +65,11 @@ p {
 }
 
 img {
+    display: none;
+}
+
+input[type=checkbox]#imgscheck:checked + #ajaxable img {
+    display: initial;
     max-width: 100%;
     max-height: 100%;
     margin: auto;
@@ -172,10 +177,15 @@ div#serif {
     line-height: 1.28;
 }
 
+#imgscheck {
+    top: 84px;
+}
+
 div#contrast,
 div#invmode,
 div#serif,
-div#version {
+div#version,
+#imgscheck {
     cursor: pointer;
     position: fixed;
     right: 10px;
@@ -273,7 +283,8 @@ div#arrow:hover span:nth-child(3){
 @media screen and (max-width:1200px) {
     div#contrast,
     div#invmode,
-    div#serif {
+    div#serif,
+    #imgscheck {
         position: absolute;
     }
     div#version {
@@ -300,6 +311,7 @@ div#arrow:hover span:nth-child(3){
     div#contrast,
     div#invmode,
     div#serif,
+    #imgscheck,
     div#version {
         display: none;
     }
