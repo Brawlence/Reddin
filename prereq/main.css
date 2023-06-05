@@ -25,12 +25,14 @@ h1 {
 
 h1 a {
     color: currentColor;
-    text-decoration: none
+    text-decoration: underline;
+    text-decoration-style: dotted;
 }
 
 h1 a:visited {
     color: currentColor;
-    text-decoration: none
+    text-decoration: underline;
+    text-decoration-style: dotted;
 }
 
 h1:hover a::after {
@@ -42,9 +44,7 @@ div#navigation {
     display: flex
 }
 
-div#navigation,
-div#ajaxable,
-div#version {
+div:is(#navigation, #ajaxable, #version) {
     transition: opacity 128ms ease-in-out 64ms;
 }
 
@@ -118,9 +118,7 @@ html.inverted body {
     color: #bababa
 }
 
-html.inverted div#contrast,
-html.inverted div#invmode,
-html.inverted div#serif {
+html.inverted div:is(#contrast, #invmode, #serif) {
     color: #fff;
     background-color: #000
 }
@@ -141,9 +139,7 @@ html.inverted.contrast body {
     color: #fff
 }
 
-html.inverted.contrast div#contrast,
-html.inverted.contrast div#invmode,
-html.inverted.contrast div#serif {
+html.inverted.contrast div:is(#contrast, #invmode, #serif) {
     color: #fff;
     background-color: #000
 }
@@ -181,10 +177,7 @@ div#serif {
     top: 84px;
 }
 
-div#contrast,
-div#invmode,
-div#serif,
-div#version,
+div:is(#contrast, #invmode, #serif, #version),
 #imgscheck {
     cursor: pointer;
     position: fixed;
@@ -209,13 +202,11 @@ div#version {
     bottom: 10px;
 }
 
-div#version:not(:hover):not(:focus-within):not(:active) {
+div#version:not(:hover):not(:focus-within) {
     opacity: 0.5;
 }
 
-div#version:hover::after,
-div#version:active::after,
-div#version:focus-within::after {
+div#version:is(:hover, :focus-within)::after {
     content: " "attr(data-tooltip);
     float: right;
 }
@@ -233,7 +224,7 @@ div#arrow {
     justify-content: center;
 }
 
-div#arrow:hover {
+div#arrow:is(:hover, :focus-within) {
     opacity: 1;
 }
 
@@ -247,19 +238,15 @@ div#arrow span {
     margin: -3px;
 }
 
-div#arrow:hover span{
+div#arrow:is(:hover, :focus-within) span{
     animation: totop 2s infinite;
 }
  
-div.right:hover span{
-   animation: none;
-}
- 
-div#arrow:hover span:nth-child(2){
+div#arrow:is(:hover, :focus-within) span:nth-child(2){
     animation-delay: 0.1s;
 }
  
-div#arrow:hover span:nth-child(3){
+div#arrow:is(:hover, :focus-within) span:nth-child(3){
     animation-delay: 0.2s;
 }
 
@@ -308,13 +295,8 @@ div#arrow:hover span:nth-child(3){
 }
 
 @media print {
-    div#navigation,
-    div#arrow,
-    div#contrast,
-    div#invmode,
-    div#serif,
-    #imgscheck,
-    div#version {
+    div:is(#navigation, #arrow, #contrast, #invmode, #serif, #version),
+    #imgscheck {
         display: none;
     }
 }
