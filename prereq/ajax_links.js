@@ -28,23 +28,41 @@ function parseToHTML(selftext_html) {
 }
 
 request.addEventListener("readystatechange", () => {
-    if (request.readyState === 4 && request.status === 200) {
+    if (request.readyState === 1) document.getElementById("ajaxable").classList.add("loading"); // 1 = open() has been called
+    if (request.readyState !== 4) return;
+
+    let title = document.getElementsByTagName("title")[0];
+    let header = document.getElementById("header");
+    let content = document.getElementById("ajaxable");
+    content.classList.remove("loading"); // response loaded
+
+    if (request.status === 200) {
         let responseObj = JSON.parse(request.response);
         let postObj = responseObj[0].data.children[0].data;
 
-        document.getElementsByTagName("title")[0].innerHTML = postObj.title;
+        title.innerHTML = postObj.title;
         document.getElementsByTagName("meta")[3].innerHTML = postObj.url;
 
         document.getElementById("whereTo").value = postObj.url;
 
-        let header = document.getElementById("header");
         header.innerText = postObj.title;
         header.href = postObj.url;
         document.body.scrollIntoView(header);
 
-        let content = document.getElementById("ajaxable");
+
         content.innerHTML = parseToHTML(postObj.selftext_html);
-        content.classList.remove("loading");
+    } else {
+        title.innerHTML = "Redding — reddit text post reader"
+        header.innerHTML = "Something went wrong! " ;
+
+        let errText = request.status ? request.statusText : "Not completed";
+        content.innerHTML = `<h2>Error code ${request.status}: ${errText} </h2>`;
+
+        if (request.status === 0) {
+            content.innerHTML += `If you're sure the link is okay, try writing <code>…://<b>www</b>.reddit…</code> or <code>…://<b>old</b>.reddit…</code> instead.<br/>` + 
+            `This might work because reddit now omits the <span class="rbw">Cross-Origin Resource Sharing</span> mark, yet old versions differ.` + 
+            `<br/><br/>Also, check if you have any blockers (like UMatrix) preventing the outgoing request formation.`;
+        }
     }
 });
 
@@ -54,7 +72,6 @@ function initiateShift (e) {
         let url = e.target.href || document.getElementById('whereTo').value; // Somewhy getting JSON is not forbidden by CORS?
         request.open('GET', url + "/.json");
         //request.setRequestHeader('Content-Type', 'application/x-www-form-url');
-        document.getElementById("ajaxable").classList.add("loading");
         request.send();
         return false;
     }

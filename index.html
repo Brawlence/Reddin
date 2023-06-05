@@ -13,30 +13,37 @@
 </head>
 
 <body>
-    <h1><a id="header" href="https://www.reddit.com/message/compose/?to=Viperys&subject=Reddin&message=I'd%20like%20to%20tell%20you%20about%20my%20idea…" title="view reddit comments">Reddin is lightweight text post reader for <i>Reddit</i>!</a></h1>
+    <h1><a id="header" href="https://www.reddit.com/message/compose/?to=Viperys&subject=Reddin&message=I'd%20like%20to%20tell%20you%20about%20my%20idea…" title="View reddit comments" tabindex="7">Reddin: lightweight text post reader for <i>Reddit</i>!</a></h1>
+    
     <div id="navigation">
-        <input id="whereTo" value="https://www.reddit.com/r/HFY/comments/u19xpa/the_nature_of_predators/">
-        <button class="ajax" autofocus>→</button>
+        <input id="whereTo" value="https://www.reddit.com/r/HFY/comments/u19xpa/the_nature_of_predators/" tabindex="1" autofocus>
+        <button class="ajax" tabindex="2">→</button>
     </div>
-    <input type="checkbox" id="imgscheck" checked="" title="Display images">
+    <input type="checkbox" id="imgscheck" checked="" title="Display images" tabindex="6">
     <div id="ajaxable">
         <h2 id="WTD">What to do:</h2>
         <ol>
-            <li>Paste the link to the box</li>
-            <li>Press the button</li>
+            <li>Paste the link into the box</li>
+            <li>Press the <code>[→]</code> button <small>(Enter works too!)</small></li>
 
             <li>Enjoy the <span class="rbw">magic</span>.</li>
         </ol>
+        <h2>Also try:</h2>
+        <ol>
+            <li>Opening this page on your mobile device. <small>Neat responsive design!</small></li>
+            <li>Fiddling with the controls on the right. <small>(Checkbox toggles images!)</small></li>
+            <li>Printing the loaded page to PDF for offline browsing.</li>
+        </ol>
     </div>
-    <div id="version" data-tooltip="version 0.8.0, july 4, 2ѳ²³">⎚</div>
-    
-    <a href="#header">
+
+    <a href="#header" title="Scroll to top" tabindex="98">
          <div id="arrow">
             <span></span>
             <span></span>
             <span></span>
         </div>
     </a>
+    <div id="version" data-tooltip="version 0.9.0, july 5, 2ѳ²³" title="Currently used version was last updated at…" tabindex="99">⎚</div>
     <script>
         var scriptSrc = [
             "./prereq/main_script.js",

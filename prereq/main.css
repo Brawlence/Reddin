@@ -209,11 +209,13 @@ div#version {
     bottom: 10px;
 }
 
-div#version:not(:hover) {
+div#version:not(:hover):not(:focus-within):not(:active) {
     opacity: 0.5;
 }
 
-div#version:hover::after {
+div#version:hover::after,
+div#version:active::after,
+div#version:focus-within::after {
     content: " "attr(data-tooltip);
     float: right;
 }
